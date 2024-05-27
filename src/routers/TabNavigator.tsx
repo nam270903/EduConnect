@@ -11,7 +11,6 @@ const TabNavigator = () => {
     const Tabs = createBottomTabNavigator();
 
     return (
-        <NavigationContainer>
             <Tabs.Navigator
             screenOptions={({route}) => (
                 {headerShown: false, tabBarShowLabel: false ,tabBarIcon: ({focused, color, size}) => {
@@ -37,7 +36,6 @@ const TabNavigator = () => {
                 <Tabs.Screen name='NotificationStack' component={NotificationNavigator} options={{headerTitle:'Notification'}} />
                 <Tabs.Screen name='ProfileStack' component={ProfileNavigator} options={{headerTitle:'Profile'}} />
             </Tabs.Navigator>
-        </NavigationContainer>
     );
 };
 

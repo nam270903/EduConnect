@@ -4,7 +4,7 @@ import React from 'react';
 const Home = ({navigation}: any) =>{
 
     return (
-        <View>
+        <View >
             <Text> Home Screen </Text>
         </View>
     )

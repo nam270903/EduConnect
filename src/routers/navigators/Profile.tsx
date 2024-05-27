@@ -1,4 +1,4 @@
-import {View, Text } from 'react-native';
+import { Text, View, StyleSheet, TextInput, ActivityIndicator, Button, Alert, KeyboardAvoidingView } from 'react-native';
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Profile from '../../screens/Profile';
@@ -12,5 +12,6 @@ const ProfileNavigator = () => {
        </ProfileStack.Navigator>
     )
 }
+
 
 export default ProfileNavigator
