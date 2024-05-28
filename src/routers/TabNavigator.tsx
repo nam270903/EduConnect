@@ -1,6 +1,5 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { NavigationContainer } from '@react-navigation/native';
 import HomeNavigator from './navigators/HomeNavigator';
 import MessageNavigator from './navigators/MessageNavigator';
 import NotificationNavigator from './navigators/NotificationNavigation';
@@ -15,19 +14,19 @@ const TabNavigator = () => {
             screenOptions={({route}) => (
                 {headerShown: false, tabBarShowLabel: false ,tabBarIcon: ({focused, color, size}) => {
                     if (route.name === 'HomeStack') {
-                        return <Home size = {size} color = {focused ? '#82CAFF' : '#808080'} />
+                        return <Home variant='Outline' size = {size} color = {focused ? '#82CAFF' : '#808080'} />
                     }
 
                     if (route.name === 'MessageStack') {
-                        return <Message size = {size} color = {focused ? '#82CAFF' : '#808080'} />
+                        return <Message variant='Outline' size = {size} color = {focused ? '#82CAFF' : '#808080'} />
                     }
 
                     if (route.name === 'NotificationStack') {
-                        return <Notification size = {size} color = {focused ? '#82CAFF' : '#808080'} />
+                        return <Notification variant='Outline' size = {size} color = {focused ? '#82CAFF' : '#808080'} />
                     }
 
                     if (route.name === 'ProfileStack') {
-                        return <Profile size = {size} color = {focused ? '#82CAFF' : '#808080'} />
+                        return <Profile variant='Outline' size = {size} color = {focused ? '#82CAFF' : '#808080'} />
                     }
                 },
                 })}>
