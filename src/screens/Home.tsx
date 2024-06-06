@@ -1,13 +1,25 @@
-import {View, Text, StyleSheet, Touchable, TouchableOpacity} from 'react-native';
+import {View, Text, StyleSheet, Touchable, TouchableOpacity, ScrollView} from 'react-native';
 import React from 'react';
 
 const Home = ({navigation}: any) =>{
 
     return (
         <View >
-            <Text> Home Screen </Text>
+            <ScrollView>
+                <Text> Home Screen </Text>
+            </ScrollView>
         </View>
     )
 };
+
+const styles = StyleSheet.create ({
+    add_class:{
+
+    },
+
+    class:{
+
+    },
+});
 
 export default Home;
