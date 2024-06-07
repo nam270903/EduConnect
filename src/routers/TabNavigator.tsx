@@ -3,7 +3,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeNavigator from './navigators/HomeNavigator';
 import MessageNavigator from './navigators/MessageNavigator';
 import NotificationNavigator from './navigators/NotificationNavigation';
-import ProfileNavigator from './navigators/Profile';
+import ProfileNavigator from './navigators/ProfileNavigation';
 import { Home, Message, Notification, Profile } from 'iconsax-react-native';
 
 const TabNavigator = () => {

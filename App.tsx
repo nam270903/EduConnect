@@ -7,7 +7,6 @@ import { User, onAuthStateChanged } from "firebase/auth";
 import { FIREBASE_AUTH } from "./FirebaseConfig";
 import Signup from "./src/screens/Signup";
 
-
 const App = () => {
   const Stack = createNativeStackNavigator();
   const [user, setUser] = useState <User | null> (null);

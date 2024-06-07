@@ -3,10 +3,9 @@ import { Text, View, StyleSheet, TextInput, ActivityIndicator, TouchableOpacity,
 import { FIREBASE_AUTH } from '../../FirebaseConfig';
 import { signInWithEmailAndPassword,} from 'firebase/auth';
 import { useNavigation } from '@react-navigation/native';
-import { RowHorizontal } from 'iconsax-react-native';
 
 const Signin = () => {
-    const navigation = useNavigation(); 
+    const navigation = useNavigation<any>(); 
     const auth = FIREBASE_AUTH;
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -116,7 +115,8 @@ const styles = StyleSheet.create({
         marginTop: 10,
         color: '#0080FF', 
         fontSize: 17,
-        textDecorationLine: 'underline'
+        textDecorationLine: 'underline',
+        
     },
 
     signInButton: {
@@ -135,7 +135,8 @@ const styles = StyleSheet.create({
 
     one: {
         flexDirection: 'row',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        paddingTop: 10
     },
 
     two: {

@@ -1,31 +1,37 @@
 import React, {useState} from 'react';
-import { Text, View, StyleSheet, TextInput, ActivityIndicator, TouchableOpacity, Button, Alert, KeyboardAvoidingView } from 'react-native';
+import { Text, View, StyleSheet, TextInput, ActivityIndicator, TouchableOpacity, Alert, KeyboardAvoidingView, } from 'react-native';
 import { FIREBASE_AUTH, FIREBASE_DATABASE } from '../../FirebaseConfig';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { useNavigation } from '@react-navigation/native';
 import { set, ref } from 'firebase/database';
+import { ArrowDown2, ArrowUp2 } from 'iconsax-react-native';
 
 const Signup = () => {
-    const navigation = useNavigation();
+    const navigation = useNavigation<any>();
+
     const auth = FIREBASE_AUTH;
     const database = FIREBASE_DATABASE;
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [username, setUsername] = useState('');
     const [phone, setPhone] = useState('');
+    const [role, setRole] = useState('')
     const [loading, setLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
+    const [isRoleOpen, setIsRoleOpen] = useState(false);
 
     const signUp = async () => {
         setLoading(true);
         try {
             const userCredential = await createUserWithEmailAndPassword (auth, email, password);
-            const uid = userCredential.user.uid;
+            const uid = userCredential.user.uid;  
             const userData = {
                 email: email,
                 password: password,
                 username: username,
                 phone: phone,
+                role: role
             };
             await set(ref(database, 'users/' + uid), userData);
 
@@ -46,9 +52,37 @@ const Signup = () => {
         setShowPassword(!showPassword);
     };
 
+    const handleRoleSelection = (selectedRole: React.SetStateAction<string>) => {
+        setRole(selectedRole);
+        setIsRoleOpen(false); 
+    };
+
+    const dropdownIcon = isRoleOpen ? <ArrowUp2 size={20} color="#808080" /> : <ArrowDown2 size={20} color="#808080" />; // Dynamic icon selection
+
+
     return (
         <View style={styles.container}>
             <KeyboardAvoidingView behavior='padding'>
+                
+                <TouchableOpacity style={styles.dropdown} onPress={() => setIsRoleOpen(!isRoleOpen)}>
+                    <Text>
+                        {role || 'Please choose your role!'}
+                    </Text>
+
+                    {isRoleOpen && (
+                        <View>
+                            <TouchableOpacity onPress={() => handleRoleSelection('Parent')}>
+                                <Text>Parent</Text>
+                            </TouchableOpacity>
+
+                            <TouchableOpacity onPress={() => handleRoleSelection('Teacher')}>
+                                <Text>Teacher</Text>
+                            </TouchableOpacity>
+                        </View>
+                    )}
+
+                    {dropdownIcon}
+                </TouchableOpacity>
 
                 <TextInput
                     style = {styles.input}
@@ -91,13 +125,18 @@ const Signup = () => {
                                 </Text>
                             </TouchableOpacity>
 
-                            <Button title='Sign Up' onPress={signUp}></Button>
-
-                            
-                            <TouchableOpacity onPress={Signin}>
-                                <Text style={styles.signInButton}> Sign In</Text>
+                            <TouchableOpacity onPress={signUp}>
+                                <View style={styles.signUpButton}>
+                                    <Text style = {styles.signUpButtonText}> Sign Up</Text>
+                                </View>
                             </TouchableOpacity>
-
+                        
+                            <View style= {styles.one}>
+                                <Text style = {styles.two}> Already have an account ? </Text>
+                                <TouchableOpacity onPress={Signin}>
+                                    <Text style={styles.signInButton}> Sign In</Text>
+                                </TouchableOpacity>
+                            </View>
                         </>
                     )
                 }
@@ -132,8 +171,50 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         marginTop: 10,
         color: '#0080FF', 
-        fontSize: 20
-    }
+        fontSize: 17,
+        textDecorationLine: 'underline',
+    },
+
+    signUpButton: {
+        height: 50,
+        padding: 15,
+        backgroundColor:'#0080FF',
+        borderRadius:13,
+    },
+
+    signUpButtonText: {
+        color: '#ffffff',
+        textAlign: 'center',
+        fontSize: 17,
+        fontWeight:'bold'
+    },
+
+    one: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        paddingTop: 10
+    },
+
+    two: {
+        textAlign: 'center',
+        marginTop: 10,
+        fontSize: 17
+    },
+
+    dropdown: {
+        flexDirection: 'row', 
+        alignItems: 'center', 
+        justifyContent: 'space-between', 
+        marginVertical: 4,
+        height: 50,
+        borderWidth: 1,
+        borderRadius: 13,
+        paddingHorizontal: 15, 
+        backgroundColor: '#fff',
+        fontSize: 15,
+        color: '#808080',
+    },
+    
   });
 
 export default Signup;
