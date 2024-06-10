@@ -97,7 +97,7 @@ const Signup = () => {
                     style = {styles.input}
                     value = {username}
                     placeholder='Your full name'
-                    autoCapitalize = 'characters'
+                    autoCapitalize = 'none'
                     onChangeText={(text) => setUsername(text)}>
                 </TextInput>
 
