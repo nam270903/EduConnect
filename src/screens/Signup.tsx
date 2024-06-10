@@ -4,7 +4,6 @@ import { FIREBASE_AUTH, FIREBASE_DATABASE } from '../../FirebaseConfig';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { useNavigation } from '@react-navigation/native';
 import { set, ref } from 'firebase/database';
-import { ArrowDown2, ArrowUp2 } from 'iconsax-react-native';
 
 const Signup = () => {
     const navigation = useNavigation<any>();
@@ -17,9 +16,11 @@ const Signup = () => {
     const [username, setUsername] = useState('');
     const [phone, setPhone] = useState('');
     const [role, setRole] = useState('')
+
     const [loading, setLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
-    const [isRoleOpen, setIsRoleOpen] = useState(false);
+    const [isParentButtonPressed, setIsParentButtonPressed] = useState(false);
+    const [isTeacherButtonPressed, setIsTeacherButtonPressed] = useState(false);
 
     const signUp = async () => {
         setLoading(true);
@@ -54,36 +55,36 @@ const Signup = () => {
 
     const handleRoleSelection = (selectedRole: React.SetStateAction<string>) => {
         setRole(selectedRole);
-        setIsRoleOpen(false); 
     };
-
-    const dropdownIcon = isRoleOpen ? <ArrowUp2 size={20} color="#808080" /> : <ArrowDown2 size={20} color="#808080" />; // Dynamic icon selection
-
 
     return (
         <View style={styles.container}>
             <KeyboardAvoidingView behavior='padding'>
                 
-                <TouchableOpacity style={styles.dropdown} onPress={() => setIsRoleOpen(!isRoleOpen)}>
-                    <Text>
-                        {role || 'Please choose your role!'}
-                    </Text>
+                <View style = {styles.doubleButton}>
+                    
+                    <TouchableOpacity 
+                        style={isParentButtonPressed ? styles.chosenButton : styles.defaultButton} 
+                        onPress={() => {
+                            handleRoleSelection('Parent') 
+                            setIsParentButtonPressed(true)
+                            setIsTeacherButtonPressed(false);
+                            }}>
+                        <Text style={isParentButtonPressed ? styles.chosenText : styles.defaultText}> Sign up as Parent</Text>
+                    </TouchableOpacity>
 
-                    {isRoleOpen && (
-                        <View>
-                            <TouchableOpacity onPress={() => handleRoleSelection('Parent')}>
-                                <Text>Parent</Text>
-                            </TouchableOpacity>
-
-                            <TouchableOpacity onPress={() => handleRoleSelection('Teacher')}>
-                                <Text>Teacher</Text>
-                            </TouchableOpacity>
-                        </View>
-                    )}
-
-                    {dropdownIcon}
-                </TouchableOpacity>
-
+                    <TouchableOpacity 
+                        style={isTeacherButtonPressed ? styles.chosenButton : styles.defaultButton} 
+                        onPress={() => {
+                            handleRoleSelection('Teacher') 
+                            setIsTeacherButtonPressed(true)
+                            setIsParentButtonPressed(false);
+                            }}>
+                        <Text style={isTeacherButtonPressed ? styles.chosenText : styles.defaultText}> Sign up as Teacher</Text>
+                    </TouchableOpacity>
+                    
+                </View>
+                
                 <TextInput
                     style = {styles.input}
                     value = {email}
@@ -149,8 +150,9 @@ const styles = StyleSheet.create({
     container: {
         marginHorizontal: 20,
         flex: 1,
-        justifyContent: 'center'
+        justifyContent: 'center',
     },
+
     input: {
         marginVertical:4,
         height: 50,
@@ -160,6 +162,7 @@ const styles = StyleSheet.create({
         backgroundColor:'#fff',
         fontSize: 15
     },
+
     showPasswordButton: {
         marginLeft: '69%',
         color: '#808080',
@@ -167,6 +170,7 @@ const styles = StyleSheet.create({
         fontSize: 14,
         marginVertical: 10,
     },
+
     signInButton: {
         textAlign: 'center',
         marginTop: 10,
@@ -200,19 +204,38 @@ const styles = StyleSheet.create({
         marginTop: 10,
         fontSize: 17
     },
+    
+    doubleButton:{
+        flexDirection:'row',
+        justifyContent:'space-around',
+    },
 
-    dropdown: {
-        flexDirection: 'row', 
-        alignItems: 'center', 
-        justifyContent: 'space-between', 
-        marginVertical: 4,
+    chosenButton:{
+        backgroundColor:'#0080FF',
+        borderRadius:13,
         height: 50,
-        borderWidth: 1,
-        borderRadius: 13,
-        paddingHorizontal: 15, 
-        backgroundColor: '#fff',
-        fontSize: 15,
-        color: '#808080',
+        borderWidth:1,
+        justifyContent:'center',
+        padding: 10,
+    },
+
+    defaultButton:{
+        backgroundColor:'#ffffff',
+        borderRadius:13,
+        height: 50,
+        borderWidth:1,
+        justifyContent:'center',
+        padding: 10,
+    },
+
+    chosenText:{
+        color:'#ffffff',
+        fontWeight:'bold'
+
+    },
+
+    defaultText:{
+        color:'#000000'
     },
     
   });
