@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import { Text, View, StyleSheet, TextInput, ActivityIndicator, TouchableOpacity, Alert, KeyboardAvoidingView, } from 'react-native';
-import { FIREBASE_AUTH, FIREBASE_DATABASE } from '../../FirebaseConfig';
+import { FIREBASE_AUTH, FIREBASE_DATABASE } from '../../../FirebaseConfig';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { useNavigation } from '@react-navigation/native';
 import { set, ref } from 'firebase/database';
@@ -154,7 +154,7 @@ const styles = StyleSheet.create({
     },
 
     input: {
-        marginVertical:4,
+        marginVertical:5,
         height: 50,
         borderWidth: 1,
         borderRadius: 13,

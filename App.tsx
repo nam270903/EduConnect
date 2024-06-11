@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import TabNavigator from "./src/routers/TabNavigator";
-import Signin from "./src/screens/Signin";
+import Signin from "./src/screens/Authentication/Signin";
 import { User, onAuthStateChanged } from "firebase/auth";
 import { FIREBASE_AUTH } from "./FirebaseConfig";
-import Signup from "./src/screens/Signup";
+import Signup from "./src/screens/Authentication/Signup";
 
 const App = () => {
   const Stack = createNativeStackNavigator();

@@ -1,6 +1,6 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Notification from '../../screens/Notification';
+import Notification from '../../screens/NotificationScreen/Notification';
 
 const NotificationNavigator = () => {
     const NotificationStack = createNativeStackNavigator();
