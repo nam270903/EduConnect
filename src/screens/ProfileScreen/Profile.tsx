@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Text, View, StyleSheet, TextInput, ActivityIndicator, Button, Alert, KeyboardAvoidingView, TouchableOpacity, ScrollView } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Text, View, StyleSheet, KeyboardAvoidingView, TouchableOpacity, ScrollView } from 'react-native';
 import { FIREBASE_DATABASE } from '../../../FirebaseConfig';
 import { FIREBASE_AUTH } from '../../../FirebaseConfig';
 import { ref, onValue, push, update, remove } from 'firebase/database';
@@ -72,7 +72,9 @@ const Profile = () =>{
 
 const styles = StyleSheet.create({
     container: {
-      paddingTop:40
+      paddingTop:40,
+      flex:1,
+      backgroundColor:'#ffffff'
     },
 
     signOutButton: {
