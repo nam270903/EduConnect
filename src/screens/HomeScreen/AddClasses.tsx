@@ -6,7 +6,7 @@ import { FIREBASE_DATABASE } from '../../../FirebaseConfig';
 import { set, ref } from 'firebase/database';
 
 
-const AddClasses = (uid: any) => {
+const AddClasses = () => {
     const navigation = useNavigation<any>();
 
     const database = FIREBASE_DATABASE;
