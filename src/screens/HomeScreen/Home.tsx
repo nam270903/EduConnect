@@ -1,10 +1,16 @@
-import {View, Text, StyleSheet, Touchable, TouchableOpacity, ScrollView} from 'react-native';
+import {View, Text, StyleSheet, Touchable, TouchableOpacity, ScrollView, FlatList} from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { AddCircle } from 'iconsax-react-native';
 import { useNavigation } from '@react-navigation/native';
 import { onAuthStateChanged } from 'firebase/auth';
 import { ref, onValue } from 'firebase/database'; 
 import { FIREBASE_AUTH, FIREBASE_DATABASE } from '../../../FirebaseConfig';
+
+interface ClassData {
+  classname: string;
+  subject: string;
+  id?: string; 
+}
 
 const Home = () => {
     const navigation = useNavigation<any>();
@@ -13,6 +19,19 @@ const Home = () => {
     const auth = FIREBASE_AUTH;
 
     const [isTeacher, setIsTeacher] = useState (false);
+    const [classes, setClasses] = useState <ClassData[]> ([]);
+
+  useEffect(() => {
+    const classRef = ref(database, 'classes');
+    const unsubscribe = onValue(classRef, (snapshot) => {
+      const fetchedClasses = snapshot.val() || [];
+      console.log("Fetched Classes:", fetchedClasses);
+      setClasses(fetchedClasses);
+      console.log("Classes state:", classes); 
+    });
+    return unsubscribe;
+  }, [database]);
+  
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -26,48 +45,50 @@ const Home = () => {
               } else {
                 setIsTeacher(false);
               }
-
             });
-
             return () => unsubscribeDatabase();
-
           } 
         });
-
         return unsubscribe; 
       }, []);
-
+ 
     const Add = () => {
         navigation.navigate('AddClasses')
     };
 
     return (
         <View style={styles.container}>
-            
+          {isTeacher && (
             <TouchableOpacity onPress={Add} style={styles.addButton}>
                 <AddCircle 
                     color='#0080FF' 
                     variant='Bold'
                     size={50} />
             </TouchableOpacity>
+          )}        
         </View>
     )
 };
 
 const styles = StyleSheet.create ({
-    container:{
-        flex:1,
-        backgroundColor:'#ffffff',
-    },
+  container:{
+    flex:1,
+    backgroundColor:'#ffffff',
+    
+  },
 
-    addButton:{ 
-        bottom: 20,
-        position:'absolute',
-        alignSelf:'flex-end',
-        zIndex:1,
-        alignItems:'flex-end',
-        right:20,
-    },
+  addButton:{ 
+    bottom: 20,
+    position:'absolute',
+    alignSelf:'flex-end',
+    zIndex:1,
+    alignItems:'flex-end',
+    right:20,
+  },
+
+  list:{
+    flex:1,
+  },
 });
 
 export default Home;

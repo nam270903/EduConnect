@@ -19,8 +19,8 @@ const Profile = () =>{
     const userId = FIREBASE_AUTH.currentUser?.uid;
     if (userId) {
       const unsubscribe = onValue(ref(FIREBASE_DATABASE, `users/${userId}`), (snapshot) => {
-        const data = snapshot.val();
-        setUserData(data || {});
+        const userDataBase = snapshot.val();
+        setUserData(userDataBase || {});
       });
       return () => unsubscribe(); 
     }
