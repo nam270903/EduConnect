@@ -3,7 +3,7 @@ import { Back } from 'iconsax-react-native';
 import React, { useState } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity, KeyboardAvoidingView, TextInput, Alert,  } from 'react-native';
 import { FIREBASE_DATABASE } from '../../../FirebaseConfig';
-import { set, ref } from 'firebase/database';
+import { set, ref, push } from 'firebase/database';
 
 
 const AddClasses = () => {
@@ -26,7 +26,7 @@ const AddClasses = () => {
                 classname,
                 subject,
             };
-            await set(ref(database, 'classes' ), classData);
+            await push(ref(database, 'classes' ), classData);
             Alert.alert('Class saved successfully!');
             navigation.navigate("Home")
             } catch (error) {
