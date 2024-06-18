@@ -3,14 +3,16 @@ import { Back } from 'iconsax-react-native';
 import React, { useState } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity, KeyboardAvoidingView, TextInput, Alert,  } from 'react-native';
 import { FIREBASE_DATABASE } from '../../../FirebaseConfig';
+import { FIREBASE_AUTH } from '../../../FirebaseConfig';
 import { set, ref, push } from 'firebase/database';
-
+import { getAuth, onAuthStateChanged } from 'firebase/auth'; 
 
 const AddClasses = () => {
     const navigation = useNavigation<any>();
 
     const database = FIREBASE_DATABASE;
-    
+    const auth = FIREBASE_AUTH;
+
     const [classname, setClassname] = useState('');
     const [subject, setSubject] = useState('');
 
@@ -18,21 +20,27 @@ const AddClasses = () => {
         navigation.navigate("Home");
     }
 
-
-
     const Save = async () => {
-        try {
-            const classData = {
-                classname,
-                subject,
-            };
-            await push(ref(database, 'classes' ), classData);
-            Alert.alert('Class saved successfully!');
-            navigation.navigate("Home")
-            } catch (error) {
-            console.error('Error saving class:', error);
-        }
-    }
+        const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+          const classData = {
+            classname,
+            subject,
+            ownerId: currentUser?.uid, 
+          };
+    
+          push(ref(database, 'classes'), classData)
+            .then(() => {
+              Alert.alert('Class saved successfully!');
+              navigation.navigate('Home');
+            })
+            .catch((error) => {
+              console.error('Error saving class:', error);
+            });
+    
+          unsubscribe();
+        });
+      };
+
   return (
     <View style={styles.container}>
         <KeyboardAvoidingView>
@@ -71,6 +79,7 @@ const styles = StyleSheet.create({
         paddingTop:20,
         paddingHorizontal:10,
     },
+      
   });
 
 export default AddClasses;
