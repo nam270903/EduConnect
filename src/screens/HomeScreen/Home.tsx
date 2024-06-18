@@ -14,7 +14,7 @@ interface ClassData {
 }
 
 const Home = () => {
-  const navigation = useNavigation<any>();
+  const navigation = useNavigation <any> ();
   const database = FIREBASE_DATABASE;
   const auth = FIREBASE_AUTH;
 
@@ -23,7 +23,6 @@ const Home = () => {
 
   const filterClasses = (fetchedClasses: any) => {
     const classData: ClassData[] = [];
-
     if (!fetchedClasses) return classData;
 
     Object.entries(fetchedClasses).forEach(([classId, classDetails]) => {
@@ -84,6 +83,10 @@ const Home = () => {
     navigation.navigate('AddClasses');
   };
 
+  const InsideClass = () => {
+    navigation.navigate('ClassInfo')
+  }
+
   return (
     <View style={styles.container}>
       {classes.length === 0 ? (
@@ -93,7 +96,7 @@ const Home = () => {
           style={styles.list}
           data={classes}
           renderItem={({ item }) => (
-            <TouchableOpacity style={styles.listItem}>
+            <TouchableOpacity onPress={InsideClass} style={styles.listItem}>
               <Text>Class Name: {item.classname}</Text>
               <Text>Subject: {item.subject}</Text>
             </TouchableOpacity>

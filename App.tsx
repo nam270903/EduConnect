@@ -7,6 +7,7 @@ import { User, onAuthStateChanged } from "firebase/auth";
 import { FIREBASE_AUTH } from "./FirebaseConfig";
 import Signup from "./src/screens/Authentication/Signup";
 import AddClasses from "./src/screens/HomeScreen/AddClasses";
+import ClassInfo from "./src/screens/HomeScreen/ClassInfo";
 
 const App = () => {
   const Stack = createNativeStackNavigator();
@@ -32,6 +33,7 @@ const App = () => {
         </>
         )}
         <Stack.Screen name="AddClasses" component={AddClasses} options={{headerShown: false}}/>
+        <Stack.Screen name="ClassInfo" component={ClassInfo} options={{headerShown: false}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -5,16 +5,18 @@ import { Text, View, StyleSheet, TouchableOpacity, KeyboardAvoidingView, TextInp
 import { FIREBASE_DATABASE } from '../../../FirebaseConfig';
 import { FIREBASE_AUTH } from '../../../FirebaseConfig';
 import { set, ref, push } from 'firebase/database';
-import { getAuth, onAuthStateChanged } from 'firebase/auth'; 
+import { onAuthStateChanged } from 'firebase/auth'; 
 
 const AddClasses = () => {
-    const navigation = useNavigation<any>();
+    const navigation = useNavigation <any> ();
 
     const database = FIREBASE_DATABASE;
     const auth = FIREBASE_AUTH;
 
     const [classname, setClassname] = useState('');
     const [subject, setSubject] = useState('');
+    const [description, setDescription] = useState('');
+
 
     const BackButton = () => {
         navigation.navigate("Home");
@@ -25,6 +27,7 @@ const AddClasses = () => {
           const classData = {
             classname,
             subject,
+            description,
             ownerId: currentUser?.uid, 
           };
     
@@ -45,11 +48,13 @@ const AddClasses = () => {
     <View style={styles.container}>
         <KeyboardAvoidingView>
 
-            <TouchableOpacity onPress={BackButton}>
-                <Back size={25}/>
+            <TouchableOpacity style={styles.backButton} onPress={BackButton}>
+              <Back size={25}/>
+              <Text style={styles.return}>Back</Text>
             </TouchableOpacity>
 
             <TextInput 
+                style = {styles.input}
                 placeholder='Class name'
                 autoCapitalize='none'
                 value={classname} 
@@ -57,30 +62,80 @@ const AddClasses = () => {
             </TextInput>
 
             <TextInput
+                style = {styles.input}
                 placeholder='Subject'
                 autoCapitalize='none'
                 value={subject}
                 onChangeText={(text) => setSubject(text)}>
             </TextInput>
 
-            <TouchableOpacity onPress={Save}>
-                <Text> Save </Text>
-            </TouchableOpacity>
+            <TextInput
+                style = {styles.input}
+                placeholder='Description'
+                autoCapitalize='none'
+                value={description}
+                onChangeText={(text) => setDescription(text)}>
+            </TextInput>
 
+            <View style={styles.saveContainer}>
+              <TouchableOpacity style={styles.saveButton} onPress={Save}>
+                  <Text style={styles.saveText} >Save</Text>
+              </TouchableOpacity>
+            </View>
         </KeyboardAvoidingView>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-    container: {
-        flex:1,
-        backgroundColor:'#ffffff',
-        paddingTop:20,
-        paddingHorizontal:10,
-    },
-      
-  });
+  container: {
+    flex:1,
+    backgroundColor:'#ffffff',
+    paddingTop:20,
+    paddingHorizontal:10,
+  },
+
+  backButton:{
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+  },
+
+  return:{
+    color:'#0080FF',
+    textAlign: 'center',
+    fontSize: 17,
+    padding: 2
+  },
+
+  input: {
+    marginVertical:5,
+    height: 50,
+    borderWidth: 1,
+    borderRadius: 13,
+    padding: 10,
+    backgroundColor:'#fff',
+    fontSize: 15
+},
+
+  saveContainer:{
+    flex: 1, 
+    paddingVertical:10,
+  },
+
+  saveButton:{
+    height: 50,
+    padding: 15,
+    backgroundColor:'#0080FF',
+    borderRadius:13,
+  },
+
+  saveText: {
+    color: '#ffffff',
+    textAlign: 'center',
+    fontSize: 17,
+    fontWeight:'bold'
+  },
+});
 
 export default AddClasses;
 
