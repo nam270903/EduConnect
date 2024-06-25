@@ -7,7 +7,7 @@ const HomeNavigator = () => {
 
     return (
        <HomeStack.Navigator>
-            <HomeStack.Screen options={({headerShown: false})} name = "Home" component = {Home}  />
+            <HomeStack.Screen options={({headerShown: false })} name = "Home" component = {Home}  />
        </HomeStack.Navigator>
     )
 }

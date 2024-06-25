@@ -8,6 +8,7 @@ import { FIREBASE_AUTH } from "./FirebaseConfig";
 import Signup from "./src/screens/Authentication/Signup";
 import AddClasses from "./src/screens/HomeScreen/AddClasses";
 import ClassInfo from "./src/screens/HomeScreen/ClassInfo";
+import JoinClass from "./src/screens/HomeScreen/JoinClass";
 
 const App = () => {
   const Stack = createNativeStackNavigator();
@@ -34,6 +35,7 @@ const App = () => {
         )}
         <Stack.Screen name="AddClasses" component={AddClasses} options={{headerShown: false}}/>
         <Stack.Screen name="ClassInfo" component={ClassInfo} options={{headerShown: false}}/>
+        <Stack.Screen name="JoinClass" component={JoinClass} options={{headerShown: false}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

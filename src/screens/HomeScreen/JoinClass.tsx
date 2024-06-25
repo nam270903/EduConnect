@@ -1,23 +1,15 @@
-import * as React from 'react';
-import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
-import { FIREBASE_AUTH } from '../../../FirebaseConfig';
-import { FIREBASE_DATABASE } from '../../../FirebaseConfig';
-import { useNavigation } from '@react-navigation/native';
 import { Back } from 'iconsax-react-native';
-import { useState } from 'react';
+import * as React from 'react';
+import { Text, View, StyleSheet, TouchableOpacity,  } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 
-const ClassInfo = () => {
+const JoinClass = () => {
     const navigation = useNavigation <any> ();
 
-    const database = FIREBASE_DATABASE;
-    const auth = FIREBASE_AUTH;
-    const [students, setStudents] = useState('')
- 
     const BackButton = () => {
         navigation.navigate("Home");
     };
-
 
   return (
     <View style={styles.container}>
@@ -49,6 +41,7 @@ const styles = StyleSheet.create({
         padding: 2
       },
   });
-  
-export default ClassInfo;
+
+export default JoinClass;
+
 

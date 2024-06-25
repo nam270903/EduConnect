@@ -1,6 +1,6 @@
-import { View, Text, StyleSheet, TouchableOpacity, FlatList,} from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, FlatList, Alert, Animated,} from 'react-native';
 import React, { useState, useEffect } from 'react';
-import { AddCircle } from 'iconsax-react-native';
+import { AddCircle, CardAdd, UserAdd } from 'iconsax-react-native';
 import { useNavigation } from '@react-navigation/native';
 import { onAuthStateChanged } from 'firebase/auth';
 import { ref, onValue } from 'firebase/database';
@@ -20,6 +20,39 @@ const Home = () => {
 
   const [isTeacher, setIsTeacher] = useState(false);
   const [classes, setClasses] = useState<ClassData[]>([]);
+
+  const [joinClassIcon] = useState(new Animated.Value(40));
+  const [addClassIcon] = useState(new Animated.Value(40));
+  const [pop, setPop] = useState(false);
+
+  const popIn = () => {
+    setPop(true);
+    Animated.timing(joinClassIcon, {
+      toValue: 70,
+      duration:500,
+      useNativeDriver:false
+    }).start();
+    Animated.timing(addClassIcon, {
+      toValue: 70,
+      duration:500,
+      useNativeDriver:false
+    }).start();
+  }
+
+  const popOut = () => {
+    setPop(false);
+    Animated.timing(joinClassIcon, {
+      toValue: 40,
+      duration:500,
+      useNativeDriver:false
+    }).start();
+
+    Animated.timing(addClassIcon, {
+      toValue: 40,
+      duration:500,
+      useNativeDriver:false
+    }).start();
+  }
 
   const filterClasses = (fetchedClasses: any) => {
     const classData: ClassData[] = [];
@@ -79,64 +112,108 @@ const Home = () => {
     };
   }, [auth, database]);
 
-  const Add = () => {
-    navigation.navigate('AddClasses');
-  };
+  const AddClass = () => [
+    navigation.navigate('AddClasses')
+  ];
 
   const InsideClass = () => {
     navigation.navigate('ClassInfo')
-  }
+  };
+
+  const JoinClass =()=>{
+    navigation.navigate('JoinClass')
+  };
 
   return (
-    <View style={styles.container}>
+    <View style={ styles.container}> 
+
       {classes.length === 0 ? (
-        <Text>No classes found.</Text>
+        <Text style={styles.noClass}> No class found </Text>
       ) : (
         <FlatList
-          style={styles.list}
-          data={classes}
-          renderItem={({ item }) => (
-            <TouchableOpacity onPress={InsideClass} style={styles.listItem}>
-              <Text>Class Name: {item.classname}</Text>
-              <Text>Subject: {item.subject}</Text>
-            </TouchableOpacity>
-          )}
-          keyExtractor={(item) => item.id}
-        />
+        style = {styles.list}
+        data={classes}
+        renderItem={({item}) => (
+          <TouchableOpacity style={styles.listItem} onPress={InsideClass} >
+            <Text>Class name: {item.classname}</Text>
+            <Text>Subject: {item.subject}</Text>
+            <Text>Class ID: {item.id}</Text>
+          </TouchableOpacity>
+        )}
+        keyExtractor={(item) => item.id}/>
       )}
 
-      {isTeacher && (
-        <TouchableOpacity onPress={Add} style={styles.addButton}>
-          <AddCircle color='#0080FF' variant='Bold' size={50} />
-        </TouchableOpacity>
+      {pop && (
+        <>
+          <Animated.View style={[styles.addButton, { right: joinClassIcon }]}>
+            <TouchableOpacity style={styles.textContainer} onPress={JoinClass}>
+              <Text style={styles.text}>Attend Class</Text>
+            </TouchableOpacity>
+          </Animated.View>
+
+          <Animated.View style={[styles.addButton, { bottom: addClassIcon, right:addClassIcon }]}>
+            <TouchableOpacity style={styles.textContainer} onPress={AddClass}>
+              <Text style={styles.text}> Create Class</Text>
+            </TouchableOpacity>
+          </Animated.View>
+        </>
       )}
+
+      <TouchableOpacity onPress={() => {
+        pop === false ? popIn() : popOut();
+      }}
+        style={styles.addButton}>
+        <AddCircle color='#0080FF' size='50' variant='Bold' />
+      </TouchableOpacity>
+
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#ffffff',
+  container:{
+    flex:1,
+    backgroundColor:'#ffffff'
   },
-  addButton: {
-    bottom: 20,
-    position: 'absolute',
-    alignSelf: 'flex-end',
-    zIndex: 1,
-    alignItems: 'flex-end',
-    right: 20,
+
+  addButton:{
+    position:'absolute',
+    bottom:20,
+    right:20,
   },
-  list: {
-    flex: 1,
-    paddingHorizontal: 10,
+
+  noClass:{
+    textAlign:'center',
+    paddingVertical: '50%',
+    fontSize:15,
+    fontWeight:'bold'
   },
-  listItem: {
-    borderWidth: 1,
-    borderRadius: 13,
-    padding: 10,
-    flexDirection: 'column',
-    marginTop: 20,
+  
+  list:{
+    marginHorizontal:10,
+    marginTop:20,
+    flex:1,
+  },
+
+  listItem:{
+    padding:10,
+    borderWidth:1,
+    borderRadius:13,
+    marginTop:20,
+    flexDirection:'column',
+  },
+
+  textContainer:{
+    borderWidth:1,
+    height:30,
+    justifyContent:'center',
+    width:120,
+    borderRadius: 13
+  },
+
+  text:{
+    fontSize:15,
+    textAlign:'center',
   },
 });
 
