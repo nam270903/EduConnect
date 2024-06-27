@@ -32,7 +32,8 @@ const Signup = () => {
                 password: password,
                 username: username,
                 phone: phone,
-                role: role
+                role: role,
+                userID: uid
             };
             await set(ref(database, 'users/' + uid), userData);
 

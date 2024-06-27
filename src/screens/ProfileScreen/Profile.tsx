@@ -16,9 +16,9 @@ const Profile = () =>{
   const [userData, setUserData] = useState <UserData> ({});
 
   useEffect(() => {
-    const userId = FIREBASE_AUTH.currentUser?.uid;
-    if (userId) {
-      const unsubscribe = onValue(ref(FIREBASE_DATABASE, `users/${userId}`), (snapshot) => {
+    const userID = FIREBASE_AUTH.currentUser?.uid;
+    if (userID) {
+      const unsubscribe = onValue(ref(FIREBASE_DATABASE, `users/${userID}`), (snapshot) => {
         const userDataBase = snapshot.val();
         setUserData(userDataBase || {});
       });

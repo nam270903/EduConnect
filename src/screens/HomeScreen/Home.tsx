@@ -12,6 +12,7 @@ interface ClassData {
   subject: string;
   id: string;
   ownerId: string;
+  members?: { [userId: string]: boolean };
 }
 
 const Home = () => {
@@ -59,32 +60,31 @@ const Home = () => {
       useNativeDriver:false
     }).start();
   }
-
   const filterClasses = (fetchedClasses: Object | {}) => {
     const classData: ClassData[] = [];
     if (!fetchedClasses) return classData;
 
-    Object.entries(fetchedClasses).forEach(([classId, classDetails]) => {
-      if (classDetails.ownerId === auth.currentUser?.uid) {
-        classData.push({
-          ...(classDetails as ClassData),
-          id: classId,
-        });
-      }
-    });
+    return Object.entries(fetchedClasses).filter(([classID, classDetails]) => {
+      const isOwner = classDetails.ownerId === auth.currentUser?.uid;
+      const isMember = classDetails.members && classDetails.members[auth.currentUser?.uid ?? ''];
 
-    return classData;
+      return isOwner || isMember;
+
+    }).map(([classId, classDetails]) => {
+      return {
+        ...classDetails,
+        id: classId,
+      };
+    });
   };
 
   useEffect(() => {
     const unsubscribeAuth = onAuthStateChanged(auth, (user) => {
       if (user) {
-        console.log("User logged in:", user.uid);
         const userRef = ref(database, `users/${user.uid}`);
 
         const unsubscribeDatabase = onValue(userRef, (snapshot) => {
           const userData = snapshot.val();
-          console.log("User data:", userData);
 
           if (userData && userData.role === 'Teacher') {
             setIsTeacher(true);
@@ -96,10 +96,8 @@ const Home = () => {
         const classRef = ref(database, 'classes');
         const unsubscribeClasses = onValue(classRef, (snapshot) => {
           const fetchedClasses = snapshot.val() || {};
-          console.log("Fetched classes:", fetchedClasses);
 
           const filtered = filterClasses(fetchedClasses);
-          console.log("Filtered classes:", filtered);
 
           setClasses(filtered);
         });
@@ -117,6 +115,7 @@ const Home = () => {
       }
     };
   }, [auth, database]);
+
 
   const AddClass = () => [
     navigation.navigate('AddClasses')
