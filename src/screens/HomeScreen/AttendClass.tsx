@@ -4,7 +4,7 @@ import { Text, View, StyleSheet, TouchableOpacity,  } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 
-const JoinClass = () => {
+const AttendClass = () => {
     const navigation = useNavigation <any> ();
 
     const BackButton = () => {
@@ -42,6 +42,6 @@ const styles = StyleSheet.create({
       },
   });
 
-export default JoinClass;
+export default AttendClass;
 
 

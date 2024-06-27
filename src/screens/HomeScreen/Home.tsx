@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, TouchableOpacity, FlatList, Alert, Animated,} from 'react-native';
 import React, { useState, useEffect } from 'react';
-import { AddCircle, CardAdd, UserAdd } from 'iconsax-react-native';
+import { AddCircle } from 'iconsax-react-native';
 import { useNavigation } from '@react-navigation/native';
 import { onAuthStateChanged } from 'firebase/auth';
 import { ref, onValue } from 'firebase/database';
@@ -126,8 +126,8 @@ const Home = () => {
     navigation.navigate('ClassInfo')
   };
 
-  const JoinClass =()=>{
-    navigation.navigate('JoinClass')
+  const AttendClass =()=>{
+    navigation.navigate('AttendClass')
   };
 
   return (
@@ -155,7 +155,7 @@ const Home = () => {
       {pop && (
         <>
           <Animated.View style={[styles.addButton, { right: joinClassIcon }]}>
-            <TouchableOpacity style={styles.textContainer} onPress={JoinClass}>
+            <TouchableOpacity style={styles.textContainer} onPress={AttendClass}>
               <Text style={styles.text}>Attend Class</Text>
             </TouchableOpacity>
           </Animated.View>
