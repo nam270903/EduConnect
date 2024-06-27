@@ -72,7 +72,7 @@ const Signin = () => {
 
 
                             <View style={styles.one}>
-                                <Text style={styles.two}> Dont have an account ?</Text>
+                                <Text style={styles.two}> Don't have an account?</Text>
                                 <TouchableOpacity onPress={Signup}>
                                     <Text style={styles.signUpButton}> Sign Up</Text>
                                 </TouchableOpacity>

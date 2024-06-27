@@ -5,6 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import { onAuthStateChanged } from 'firebase/auth';
 import { ref, onValue } from 'firebase/database';
 import { FIREBASE_AUTH, FIREBASE_DATABASE } from '../../../FirebaseConfig';
+import Clipboard from '@react-native-clipboard/clipboard';
 
 interface ClassData {
   classname: string;
@@ -24,6 +25,11 @@ const Home = () => {
   const [joinClassIcon] = useState(new Animated.Value(40));
   const [addClassIcon] = useState(new Animated.Value(40));
   const [pop, setPop] = useState(false);
+
+  const copy = (classID: string) => {
+    Clipboard.setString(classID);
+    Alert.alert('Class ID has been copied to clipboard.');
+  };
 
   const popIn = () => {
     setPop(true);
@@ -54,7 +60,7 @@ const Home = () => {
     }).start();
   }
 
-  const filterClasses = (fetchedClasses: any) => {
+  const filterClasses = (fetchedClasses: Object | {}) => {
     const classData: ClassData[] = [];
     if (!fetchedClasses) return classData;
 
@@ -134,10 +140,13 @@ const Home = () => {
         style = {styles.list}
         data={classes}
         renderItem={({item}) => (
-          <TouchableOpacity style={styles.listItem} onPress={InsideClass} >
-            <Text>Class name: {item.classname}</Text>
-            <Text>Subject: {item.subject}</Text>
-            <Text>Class ID: {item.id}</Text>
+          <TouchableOpacity 
+            style={styles.listItem} 
+            onPress={InsideClass} 
+            onLongPress={() => copy(item.id)}>
+              <Text>Class name: {item.classname}</Text>
+              <Text>Subject: {item.subject}</Text>
+              <Text>Class ID: {item.id}</Text>
           </TouchableOpacity>
         )}
         keyExtractor={(item) => item.id}/>
@@ -151,11 +160,13 @@ const Home = () => {
             </TouchableOpacity>
           </Animated.View>
 
-          <Animated.View style={[styles.addButton, { bottom: addClassIcon, right:addClassIcon }]}>
-            <TouchableOpacity style={styles.textContainer} onPress={AddClass}>
-              <Text style={styles.text}> Create Class</Text>
-            </TouchableOpacity>
-          </Animated.View>
+          {isTeacher && (
+            <Animated.View style={[styles.addButton, { bottom: addClassIcon, right:addClassIcon }]}>
+              <TouchableOpacity style={styles.textContainer} onPress={AddClass}>
+                <Text style={styles.text}> Create Class</Text>
+              </TouchableOpacity>
+            </Animated.View>
+          )}
         </>
       )}
 
