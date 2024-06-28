@@ -1,30 +1,27 @@
 import * as React from 'react';
 import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
-import { FIREBASE_AUTH } from '../../../FirebaseConfig';
-import { FIREBASE_DATABASE } from '../../../FirebaseConfig';
 import { useNavigation } from '@react-navigation/native';
 import { Back } from 'iconsax-react-native';
-import { useState } from 'react';
+import NewsFeed from './NewsFeed';
+import Member from './Member';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
 
 const ClassInfo = () => {
     const navigation = useNavigation <any> ();
-
-    const database = FIREBASE_DATABASE;
-    const auth = FIREBASE_AUTH;
-    const [students, setStudents] = useState('')
  
     const BackButton = () => {
         navigation.navigate("Home");
     };
 
+    const TopTabNavigator = createMaterialTopTabNavigator();
 
   return (
     <View style={styles.container}>
-        <TouchableOpacity style={styles.backButton} onPress={BackButton}>
-            <Back size={25}/>
-            <Text style={styles.return}>Back</Text>
-        </TouchableOpacity>    
+      <TopTabNavigator.Navigator>
+        <TopTabNavigator.Screen name="NewsFeed" component={NewsFeed} />
+        <TopTabNavigator.Screen name="Member" component={Member} />
+      </TopTabNavigator.Navigator>
     </View>
   );
 };

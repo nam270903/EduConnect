@@ -12,7 +12,7 @@ interface ClassData {
   subject: string;
   id: string;
   ownerId: string;
-  members?: { [userId: string]: boolean };
+  members?: string;
 }
 
 const Home = () => {
