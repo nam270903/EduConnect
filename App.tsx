@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { NavigationContainer, useNavigation } from "@react-navigation/native";
+import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { User, onAuthStateChanged } from "firebase/auth";
 import { FIREBASE_AUTH } from "./FirebaseConfig";
@@ -11,8 +11,6 @@ import Signup from "./src/screens/Authentication/Signup";
 import AddClasses from "./src/screens/HomeScreen/AddClasses";
 import ClassInfo from "./src/screens/HomeScreen/ClassInfo";
 import AttendClass from "./src/screens/HomeScreen/AttendClass";
-import { StyleSheet, Text, TouchableOpacity } from "react-native";
-import { Back } from "iconsax-react-native";
 
 const App = () => {
   const Stack = createNativeStackNavigator();
@@ -46,26 +44,5 @@ const App = () => {
     </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-      flex:1,
-      backgroundColor:'#ffffff',
-      paddingTop:20,
-      paddingHorizontal:10,
-    },
-
-    backButton:{
-      flexDirection: 'row',
-      justifyContent: 'flex-start',
-    },
-    
-    return:{
-      color:'#0080FF',
-      textAlign: 'center',
-      fontSize: 17,
-      padding: 2
-    },
-});
 
 export default App
