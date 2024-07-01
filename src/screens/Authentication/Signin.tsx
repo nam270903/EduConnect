@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { Text, View, StyleSheet, TextInput, ActivityIndicator, TouchableOpacity, Alert, KeyboardAvoidingView } from 'react-native';
+import { Text, View, StyleSheet, TextInput, ActivityIndicator, TouchableOpacity, Alert, KeyboardAvoidingView, ScrollView } from 'react-native';
 import { FIREBASE_AUTH } from '../../../FirebaseConfig';
 import { signInWithEmailAndPassword,} from 'firebase/auth';
 import { useNavigation } from '@react-navigation/native';
@@ -42,7 +42,8 @@ const Signin = () => {
                     value = {email} 
                     placeholder ='Email' 
                     autoCapitalize ='none' 
-                    onChangeText={(text) => setEmail(text)}> 
+                    onChangeText={(text) => setEmail(text)}
+                    placeholderTextColor='#808080'> 
                 </TextInput>
 
                 {/* Password */}
@@ -51,7 +52,8 @@ const Signin = () => {
                     secureTextEntry = {!showPassword} 
                     value = {password} 
                     placeholder ='Password' 
-                    onChangeText={(text) => setPassword(text) }>
+                    onChangeText={(text) => setPassword(text) }
+                    placeholderTextColor='#808080'> 
                 </TextInput>
 
                 {

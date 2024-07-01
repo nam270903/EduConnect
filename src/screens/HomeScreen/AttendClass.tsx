@@ -63,7 +63,8 @@ const AttendClass = () => {
         style={styles.input}
         placeholder='Class ID'
         value={classID}
-        onChangeText={setClassID}/>
+        onChangeText={setClassID}
+        placeholderTextColor='#808080'/>
 
       <TouchableOpacity style={styles.attendButton} onPress={handleAttendClass}>
         <Text style={styles.attendText}>Join Class</Text>

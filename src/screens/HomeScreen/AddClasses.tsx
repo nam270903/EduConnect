@@ -58,7 +58,8 @@ const AddClasses = () => {
                 placeholder='Class name'
                 autoCapitalize='none'
                 value={classname} 
-                onChangeText={(text) => setClassname(text)}>
+                onChangeText={(text) => setClassname(text)}
+                placeholderTextColor='#808080'>
             </TextInput>
 
             <TextInput
@@ -66,7 +67,8 @@ const AddClasses = () => {
                 placeholder='Subject'
                 autoCapitalize='none'
                 value={subject}
-                onChangeText={(text) => setSubject(text)}>
+                onChangeText={(text) => setSubject(text)}
+                placeholderTextColor='#808080'>
             </TextInput>
 
             <TextInput
@@ -74,7 +76,8 @@ const AddClasses = () => {
                 placeholder='Description'
                 autoCapitalize='none'
                 value={description}
-                onChangeText={(text) => setDescription(text)}>
+                onChangeText={(text) => setDescription(text)}
+                placeholderTextColor='#808080'>
             </TextInput>
 
             <View style={styles.saveContainer}>

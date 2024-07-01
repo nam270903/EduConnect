@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { Text, View, StyleSheet, TextInput, ActivityIndicator, TouchableOpacity, Alert, KeyboardAvoidingView, } from 'react-native';
+import { Text, View, StyleSheet, TextInput, ActivityIndicator, TouchableOpacity, Alert, KeyboardAvoidingView, ScrollView, } from 'react-native';
 import { FIREBASE_AUTH, FIREBASE_DATABASE } from '../../../FirebaseConfig';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { useNavigation } from '@react-navigation/native';
@@ -91,7 +91,8 @@ const Signup = () => {
                     value = {email}
                     placeholder='Email'
                     autoCapitalize='none'
-                    onChangeText={(text) => setEmail(text)}>
+                    onChangeText={(text) => setEmail(text)}
+                    placeholderTextColor='#808080'>
                 </TextInput>
 
                 <TextInput
@@ -99,14 +100,16 @@ const Signup = () => {
                     value = {username}
                     placeholder='Your full name'
                     autoCapitalize = 'none'
-                    onChangeText={(text) => setUsername(text)}>
+                    onChangeText={(text) => setUsername(text)}
+                    placeholderTextColor='#808080'>
                 </TextInput>
 
                 <TextInput
                     style = {styles.input}
                     value = {phone}
                     placeholder='Phone Number'
-                    onChangeText={(text) => setPhone(text)}>
+                    onChangeText={(text) => setPhone(text)}
+                    placeholderTextColor='#808080'>
                 </TextInput>
 
                 <TextInput
@@ -115,7 +118,8 @@ const Signup = () => {
                     placeholder='Password'
                     secureTextEntry = {!showPassword}
                     autoCapitalize='none'
-                    onChangeText={(text) => setPassword(text)}>
+                    onChangeText={(text) => setPassword(text)}
+                    placeholderTextColor='#808080'>
                 </TextInput>
 
                 {
