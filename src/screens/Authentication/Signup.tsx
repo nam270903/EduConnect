@@ -252,8 +252,8 @@ const styles = StyleSheet.create({
     },
     
     appBg:{
-        height:'100%',
-        width:'100%',
+        height:'120%',
+        width:'120%',
         position:'absolute'
     },
 
