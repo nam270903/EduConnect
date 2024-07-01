@@ -1,10 +1,14 @@
 import React, {useState} from 'react';
-import { Text, View, StyleSheet, TextInput, ActivityIndicator, TouchableOpacity, Alert, KeyboardAvoidingView, ScrollView } from 'react-native';
+import { Text, View, StyleSheet, TextInput, ActivityIndicator, TouchableOpacity, Alert, KeyboardAvoidingView, ScrollView, Image } from 'react-native';
 import { FIREBASE_AUTH } from '../../../FirebaseConfig';
 import { signInWithEmailAndPassword,} from 'firebase/auth';
 import { useNavigation } from '@react-navigation/native';
 
+
 const Signin = () => {
+    const appIcon = require('../image/icon2-bg.png');
+    const appBg = require('../image/background.jpg');
+
     const navigation = useNavigation<any>(); 
     const auth = FIREBASE_AUTH;
     const [email, setEmail] = useState('');
@@ -35,6 +39,18 @@ const Signin = () => {
 
     return (
         <View style={styles.container}>
+            <Image
+                style={styles.appBg}
+                source={appBg}/>
+
+            <Image 
+                style = {styles.appIcon}
+                source={appIcon}/>
+
+            <Text style = {styles.textLogo}>
+                Edu Connect
+            </Text>
+
             <KeyboardAvoidingView behavior='padding'>
                 {/* Email */}
                 <TextInput 
@@ -89,9 +105,9 @@ const Signin = () => {
 
 const styles = StyleSheet.create({
     container: {
-        marginHorizontal: 20,
         flex: 1,
         justifyContent: 'center',
+        backgroundColor:'#ffffff',
     },
 
     input: {
@@ -100,24 +116,27 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 13,
         padding: 10,
-        backgroundColor:'#fff',
-        fontSize: 15
-
+        backgroundColor:'#ffffff',
+        fontSize: 15,
+        marginHorizontal: 20,
     },
+
     showPasswordButton: {
         marginLeft: '69%',
         color: '#808080',
         textDecorationLine: 'underline',
         fontSize: 14,
         marginVertical: 10,
-
+        
     },
+
     signUpButton: {
         textAlign: 'center',
         marginTop: 10,
         color: '#0080FF', 
         fontSize: 17,
         textDecorationLine: 'underline',
+        fontWeight:'bold'
         
     },
 
@@ -126,6 +145,7 @@ const styles = StyleSheet.create({
         padding: 15,
         backgroundColor:'#0080FF',
         borderRadius:13,
+        marginHorizontal: 20,
     },
 
     signInButtonText: {
@@ -138,14 +158,35 @@ const styles = StyleSheet.create({
     one: {
         flexDirection: 'row',
         justifyContent: 'center',
-        paddingTop: 10
+        paddingTop: 10,
     },
 
     two: {
         textAlign: 'center',
         marginTop: 10,
-        fontSize: 17
-    }
+        fontSize: 17,
+    },
+
+    appIcon:{
+        width:'40%',
+        height:'30%',
+        alignSelf:'center',
+        marginBottom:50
+    },
+
+    textLogo:{
+        textAlign:'center',
+        paddingVertical:10,
+        fontSize: 30,
+        fontWeight:'bold',
+        color:'#4CC9F0'
+    },
+
+    appBg:{
+        height:'120%',
+        width:'120%',
+        position:'absolute'
+    },
 });
 
 export default Signin;

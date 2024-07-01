@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { Text, View, StyleSheet, TextInput, ActivityIndicator, TouchableOpacity, Alert, KeyboardAvoidingView, ScrollView, } from 'react-native';
+import { Text, View, StyleSheet, TextInput, ActivityIndicator, TouchableOpacity, Alert, KeyboardAvoidingView, ScrollView, Image, } from 'react-native';
 import { FIREBASE_AUTH, FIREBASE_DATABASE } from '../../../FirebaseConfig';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { useNavigation } from '@react-navigation/native';
@@ -10,6 +10,9 @@ const Signup = () => {
 
     const auth = FIREBASE_AUTH;
     const database = FIREBASE_DATABASE;
+
+    const appIcon = require('../image/icon2-bg.png');
+    const appBg = require('../image/background.jpg');
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -60,8 +63,11 @@ const Signup = () => {
 
     return (
         <View style={styles.container}>
+            <Image
+                style={styles.appBg}
+                source={appBg}/>
+
             <KeyboardAvoidingView behavior='padding'>
-                
                 <View style = {styles.doubleButton}>
                     
                     <TouchableOpacity 
@@ -83,7 +89,6 @@ const Signup = () => {
                             }}>
                         <Text style={isTeacherButtonPressed ? styles.chosenText : styles.defaultText}> Sign up as Teacher</Text>
                     </TouchableOpacity>
-                    
                 </View>
                 
                 <TextInput
@@ -153,19 +158,20 @@ const Signup = () => {
 
 const styles = StyleSheet.create({
     container: {
-        marginHorizontal: 20,
         flex: 1,
         justifyContent: 'center',
+        backgroundColor:'#ffffff',
     },
 
     input: {
-        marginVertical:5,
+        marginVertical:4,
         height: 50,
         borderWidth: 1,
         borderRadius: 13,
         padding: 10,
-        backgroundColor:'#fff',
-        fontSize: 15
+        backgroundColor:'#ffffff',
+        fontSize: 15,
+        marginHorizontal: 20,
     },
 
     showPasswordButton: {
@@ -182,6 +188,7 @@ const styles = StyleSheet.create({
         color: '#0080FF', 
         fontSize: 17,
         textDecorationLine: 'underline',
+        fontWeight:'bold'
     },
 
     signUpButton: {
@@ -189,6 +196,7 @@ const styles = StyleSheet.create({
         padding: 15,
         backgroundColor:'#0080FF',
         borderRadius:13,
+        marginHorizontal: 20,
     },
 
     signUpButtonText: {
@@ -243,6 +251,12 @@ const styles = StyleSheet.create({
         color:'#000000'
     },
     
+    appBg:{
+        height:'100%',
+        width:'100%',
+        position:'absolute'
+    },
+
   });
 
 export default Signup;
