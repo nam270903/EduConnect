@@ -1,20 +1,52 @@
 import * as React from 'react';
 import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { Back, User } from 'iconsax-react-native';
+import { User } from 'iconsax-react-native';
 import NewsFeed from './NewsFeed';
 import Member from './Member';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import { FIREBASE_AUTH, FIREBASE_DATABASE } from '../../../FirebaseConfig';
+import { onAuthStateChanged } from 'firebase/auth';
+import { ref, onValue } from 'firebase/database';
+import { useEffect, useState } from 'react';
+import Attendance from './Attendance';
+import Marksheet from './Marksheet';
 
 
 const ClassInfo = () => {
-    const navigation = useNavigation <any> ();
- 
-    const BackButton = () => {
-        navigation.goBack();
-    };
+  const navigation = useNavigation <any> ();
 
-    const TopTabNavigator = createMaterialTopTabNavigator();
+  const auth = FIREBASE_AUTH;
+  const database = FIREBASE_DATABASE;
+
+  const [isTeacher, setIsTeacher] = useState(false);
+
+  const BackButton = () => {
+    navigation.goBack();
+  };
+
+  const TopTabNavigator = createMaterialTopTabNavigator();
+
+  useEffect(() => {
+    const unsubscribeAuth = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const userRef = ref(database, `users/${user.uid}`);
+
+        const unsubscribeDatabase = onValue(userRef, (snapshot) => {
+          const userData = snapshot.val();
+  
+          if (userData && userData.role === 'Teacher') {
+            setIsTeacher(true);
+          } else {
+            setIsTeacher(false);
+          }
+        });  
+        return () => unsubscribeDatabase();
+      }
+    });
+  
+    return unsubscribeAuth;
+  }, [auth, database]);
 
   return (
     <View style={styles.container}>
@@ -29,9 +61,18 @@ const ClassInfo = () => {
         <User style={styles.idk} size={25}/>
       </View>
 
-      <TopTabNavigator.Navigator>
-        <TopTabNavigator.Screen name="NewsFeed" component={NewsFeed} />
-        <TopTabNavigator.Screen name="Member" component={Member} />
+      
+      <TopTabNavigator.Navigator screenOptions={{ tabBarScrollEnabled: true }}>
+        <TopTabNavigator.Screen name="NewsFeed" component={NewsFeed}/>
+
+        {isTeacher && (
+          <>
+            <TopTabNavigator.Screen name="Attendance" component={Attendance}/>
+            <TopTabNavigator.Screen name="Marksheet" component={Marksheet}/>
+          </>
+        )}
+        
+        <TopTabNavigator.Screen name="Member" component={Member}/>
       </TopTabNavigator.Navigator>
     </View>
   );

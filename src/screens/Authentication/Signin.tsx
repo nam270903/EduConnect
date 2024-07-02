@@ -52,8 +52,7 @@ const Signin = () => {
             </Text>
 
             <KeyboardAvoidingView behavior='padding'>
-                {/* Email */}
-                <TextInput 
+               <TextInput 
                     style={styles.input} 
                     value = {email} 
                     placeholder ='Email' 
@@ -62,7 +61,6 @@ const Signin = () => {
                     placeholderTextColor='#808080'> 
                 </TextInput>
 
-                {/* Password */}
                 <TextInput 
                     style={styles.input} 
                     secureTextEntry = {!showPassword} 
@@ -72,34 +70,32 @@ const Signin = () => {
                     placeholderTextColor='#808080'> 
                 </TextInput>
 
-                {
-                    loading ? (<ActivityIndicator/>) : (
-                        <>
-                            <TouchableOpacity onPress={toggleShowPassword}>
-                                <Text style={styles.showPasswordButton}>
-                                    {showPassword ? 'Hide password' : 'Show password'}
-                                </Text>
-                            </TouchableOpacity>
+                {loading ? (<ActivityIndicator/>) : (
+                    <>
+                        <TouchableOpacity onPress={toggleShowPassword}>
+                            <Text style={styles.showPasswordButton}>
+                                {showPassword ? 'Hide password' : 'Show password'}
+                            </Text>
+                        </TouchableOpacity>
 
 
-                            <TouchableOpacity onPress={signIn}>
-                                <View style={styles.signInButton}>
+                        <TouchableOpacity onPress={signIn}>
+                            <View style={styles.signInButton}>
                                 <Text style={styles.signInButtonText}> Sign In</Text>
-                                </View>
-                            </TouchableOpacity>
-
-
-                            <View style={styles.one}>
-                                <Text style={styles.two}> Don't have an account?</Text>
-                                <TouchableOpacity onPress={Signup}>
-                                    <Text style={styles.signUpButton}> Sign Up</Text>
-                                </TouchableOpacity>
                             </View>
-                        </>
-                    )
-                }       
+                        </TouchableOpacity>
+
+
+                        <View style={styles.one}>
+                            <Text style={styles.two}> Don't have an account?</Text>
+                            <TouchableOpacity onPress={Signup}>
+                                <Text style={styles.signUpButton}> Sign Up</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </>
+                    )}       
             </KeyboardAvoidingView> 
-            </View>
+        </View>
   );
 };
 
@@ -190,5 +186,3 @@ const styles = StyleSheet.create({
 });
 
 export default Signin;
-
-
