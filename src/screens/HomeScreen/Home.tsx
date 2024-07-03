@@ -60,6 +60,7 @@ const Home = () => {
       useNativeDriver:false
     }).start();
   }
+  
   const filterClasses = (fetchedClasses: Object | {}) => {
     const classData: ClassData[] = [];
     if (!fetchedClasses) return classData;
