@@ -1,25 +1,20 @@
 import * as React from 'react';
 import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 import { useEffect, useState } from 'react';
-import { FIREBASE_AUTH, FIREBASE_DATABASE } from '../../../FirebaseConfig';
+import { FIREBASE_AUTH, FIREBASE_DATABASE } from '../../../../FirebaseConfig';
 import { onAuthStateChanged } from 'firebase/auth';
 import { onValue, ref, push, set } from 'firebase/database';
 import { AddCircle } from 'iconsax-react-native';
+import { useNavigation } from '@react-navigation/native';
 
-interface ClassData {
-  classname: string;
-  subject: string;
-  id: string;
-  ownerId: string;
-  members?: string;
-};
 
 const NewsFeed = () => {
+  const navigation = useNavigation <any> ();
+
   const auth = FIREBASE_AUTH;
   const database = FIREBASE_DATABASE;
 
   const [isTeacher, setIsTeacher] = useState(false)
-  const [classes, setClasses] = useState<ClassData[]>([]);
 
 
   useEffect(() => {
@@ -44,8 +39,8 @@ const NewsFeed = () => {
   }, [auth, database]);
 
 
-  const CreateNotes = () => {
-
+  const CreatePost = () => {
+    navigation.navigate('CreatePost')
   };
   
 
@@ -54,7 +49,7 @@ const NewsFeed = () => {
 
       {isTeacher && (
         <>
-          <TouchableOpacity style={styles.addButton} >
+          <TouchableOpacity onPress={CreatePost} style={styles.addButton} >
             <AddCircle color='#0080FF' size='50' variant='Bold' />
           </TouchableOpacity>
         </>

@@ -4,7 +4,7 @@ import { AddCircle } from 'iconsax-react-native';
 import { useNavigation } from '@react-navigation/native';
 import { onAuthStateChanged } from 'firebase/auth';
 import { ref, onValue } from 'firebase/database';
-import { FIREBASE_AUTH, FIREBASE_DATABASE } from '../../../FirebaseConfig';
+import { FIREBASE_AUTH, FIREBASE_DATABASE } from '../../../../FirebaseConfig';
 import Clipboard from '@react-native-clipboard/clipboard';
 
 interface ClassData {

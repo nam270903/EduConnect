@@ -2,8 +2,8 @@ import { useNavigation } from '@react-navigation/native';
 import { Back } from 'iconsax-react-native';
 import React, { useState } from 'react';
 import { Text, View, StyleSheet, TouchableOpacity, KeyboardAvoidingView, TextInput, Alert,  } from 'react-native';
-import { FIREBASE_DATABASE } from '../../../FirebaseConfig';
-import { FIREBASE_AUTH } from '../../../FirebaseConfig';
+import { FIREBASE_DATABASE } from '../../../../FirebaseConfig';
+import { FIREBASE_AUTH } from '../../../../FirebaseConfig';
 import { set, ref, push } from 'firebase/database';
 import { onAuthStateChanged } from 'firebase/auth'; 
 
@@ -29,6 +29,7 @@ const AddClasses = () => {
             subject,
             description,
             ownerId: currentUser?.uid, 
+            
           };
     
           push(ref(database, 'classes'), classData)

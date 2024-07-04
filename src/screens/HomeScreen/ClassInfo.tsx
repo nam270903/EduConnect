@@ -2,15 +2,17 @@ import * as React from 'react';
 import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { User } from 'iconsax-react-native';
-import NewsFeed from './NewsFeed';
+import NewsFeed from './NewsFeed/NewsFeed';
 import Member from './Member';
+import Attendance from './Attendance';
+import Marksheet from './Marksheet';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { FIREBASE_AUTH, FIREBASE_DATABASE } from '../../../FirebaseConfig';
 import { onAuthStateChanged } from 'firebase/auth';
 import { ref, onValue } from 'firebase/database';
 import { useEffect, useState } from 'react';
-import Attendance from './Attendance';
-import Marksheet from './Marksheet';
+import Settings from './Settings';
+
 
 
 const ClassInfo = () => {
@@ -64,15 +66,14 @@ const ClassInfo = () => {
       
       <TopTabNavigator.Navigator screenOptions={{ tabBarScrollEnabled: true }}>
         <TopTabNavigator.Screen name="NewsFeed" component={NewsFeed}/>
-
         {isTeacher && (
           <>
             <TopTabNavigator.Screen name="Attendance" component={Attendance}/>
             <TopTabNavigator.Screen name="Marksheet" component={Marksheet}/>
           </>
         )}
-        
         <TopTabNavigator.Screen name="Member" component={Member}/>
+        <TopTabNavigator.Screen name="Settings" component={Settings}/>
       </TopTabNavigator.Navigator>
     </View>
   );

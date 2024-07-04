@@ -8,9 +8,10 @@ import TabNavigator from "./src/routers/TabNavigator";
 
 import Signin from "./src/screens/Authentication/Signin";
 import Signup from "./src/screens/Authentication/Signup";
-import AddClasses from "./src/screens/HomeScreen/AddClasses";
+import AddClasses from "./src/screens/HomeScreen/HomeScreenUI/AddClasses";
 import ClassInfo from "./src/screens/HomeScreen/ClassInfo";
-import AttendClass from "./src/screens/HomeScreen/AttendClass";
+import AttendClass from "./src/screens/HomeScreen/HomeScreenUI/AttendClass";
+import CreatePost from "./src/screens/HomeScreen/NewsFeed/CreatePost";
 
 
 const App = () => {
@@ -37,10 +38,9 @@ const App = () => {
         </>
         )}
         <Stack.Screen name="AddClasses" component={AddClasses} options={{headerShown: false}}/>
-
         <Stack.Screen name="ClassInfo" component={ClassInfo} options={{headerShown: false}}/>
-
         <Stack.Screen name="AttendClass" component={AttendClass} options={{headerShown: false}}/>
+        <Stack.Screen name="CreatePost" component={CreatePost} options={{headerShown: false}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
