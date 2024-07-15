@@ -19,31 +19,33 @@ const AddClasses = () => {
 
 
     const BackButton = () => {
-        navigation.navigate("Home");
+      navigation.navigate("Home");
     }
 
     const Save = async () => {
-        const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-          const classData = {
-            classname,
-            subject,
-            description,
-            ownerId: currentUser?.uid, 
-            
-          };
-    
-          push(ref(database, 'classes'), classData)
-            .then(() => {
-              Alert.alert('Class saved successfully!');
-              navigation.navigate('Home');
-            })
-            .catch((error) => {
-              console.error('Error saving class:', error);
-            });
-    
-          unsubscribe();
-        });
-      };
+      const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+        const ClassRef = push(ref(database, 'classes'));
+        const classID = ClassRef.key;
+        const classData = {
+          classname,
+          subject,
+          description,
+          ownerId: currentUser?.uid, 
+          classID
+        };
+
+        push(ref(database, 'classes'), classData)
+          .then(() => {
+            Alert.alert('Class saved successfully!');
+            navigation.navigate('Home');
+          })
+          .catch((error) => {
+            console.error('Error saving class:', error);
+          });
+
+        unsubscribe();
+      });
+    };
 
   return (
     <View style={styles.container}>

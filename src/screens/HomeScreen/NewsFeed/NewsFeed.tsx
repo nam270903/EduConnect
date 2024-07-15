@@ -41,9 +41,9 @@ const NewsFeed = () => {
 
   const CreatePost = () => {
     navigation.navigate('CreatePost')
-  };
-  
+  }; 
 
+  
   return (
     <View style={styles.container}>
 

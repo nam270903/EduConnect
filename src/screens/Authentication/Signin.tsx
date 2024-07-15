@@ -164,8 +164,8 @@ const styles = StyleSheet.create({
     },
 
     appIcon:{
-        width:'40%',
-        height:'30%',
+        width:'30%',
+        height:'22%',
         alignSelf:'center',
         marginBottom:50
     },
