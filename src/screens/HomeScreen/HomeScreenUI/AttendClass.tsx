@@ -33,8 +33,8 @@ const AttendClass = () => {
     try {
       const userRef = ref(database, `users/${auth.currentUser?.uid}`);
       const userSnapshot = await get(userRef);
-      const userID = userSnapshot.val()?.userID;
-      const username = userSnapshot.val()?.username;
+      const userID = userSnapshot.val().userID;
+      const username = userSnapshot.val().username;
 
       try {
         const membersRef = ref(database, `classes/${classID}/members`);

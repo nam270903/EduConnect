@@ -14,7 +14,6 @@ import { useEffect, useState } from 'react';
 import Settings from './Settings';
 
 
-
 const ClassInfo = () => {
   const navigation = useNavigation <any> ();
 

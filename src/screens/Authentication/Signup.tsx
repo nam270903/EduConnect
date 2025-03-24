@@ -57,7 +57,7 @@ const Signup = () => {
         setShowPassword(!showPassword);
     };
 
-    const handleRoleSelection = (selectedRole: React.SetStateAction<string>) => {
+    const RoleSelection = (selectedRole: React.SetStateAction<string>) => {
         setRole(selectedRole);
     };
 
@@ -73,7 +73,7 @@ const Signup = () => {
                     <TouchableOpacity 
                         style={isParentButtonPressed ? styles.chosenButton : styles.defaultButton} 
                         onPress={() => {
-                            handleRoleSelection('Parent') 
+                            RoleSelection('Parent') 
                             setIsParentButtonPressed(true)
                             setIsTeacherButtonPressed(false);
                             }}>
@@ -83,7 +83,7 @@ const Signup = () => {
                     <TouchableOpacity 
                         style={isTeacherButtonPressed ? styles.chosenButton : styles.defaultButton} 
                         onPress={() => {
-                            handleRoleSelection('Teacher') 
+                            RoleSelection('Teacher') 
                             setIsTeacherButtonPressed(true)
                             setIsParentButtonPressed(false);
                             }}>
